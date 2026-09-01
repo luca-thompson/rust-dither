@@ -3,6 +3,7 @@
 #[path = "dither/bayer_4.rs"] mod bayer_4;
 #[path = "dither/halftone.rs"] mod halftone;
 #[path = "dither/random.rs"] mod random;
+#[path = "dither/fs.rs"] mod fs;
 #[path = "grayscale.rs"] mod grayscale;
 
 use image::DynamicImage;
@@ -30,6 +31,9 @@ pub fn dispatch(image: &mut DynamicImage, algorithm: String){
         }
         "random" => {
             random::random_dither(image);
+        }
+        "floyd_steinberg" => {
+            fs::fs_dither(image);
         }
         _ => {
             println!("Unrecognised algorithm: '{}'.", algorithm);

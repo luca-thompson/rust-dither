@@ -23,5 +23,4 @@ pub fn threshold_dither(image: &mut DynamicImage){
             
         }
     }
-    
 }
