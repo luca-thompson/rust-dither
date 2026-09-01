@@ -14,7 +14,7 @@ Algorithms to be added:
 - Void and Cluster
 
 ### Examples (bayer_4 & random)
-<img src="examples/bayer_4_example.jpg" alt="bayer_screenshot" width="350"/> <img src="examples/random_example.jpg" alt="random_screenshot" width="350"/>
+<img src="examples/bayer_4_example.jpg" alt="bayer_4_screenshot" width="350"/> <img src="examples/fs_example.jpg" alt="floyd_steinberg_screenshot" width="350"/>
 
 ### Installation
 
@@ -41,7 +41,3 @@ cargo run --f-in <F_IN> --f-out <F_OUT> --algorithm <ALGORITHM>
 | --f-in      | file in (image to dither)               |
 | --f-out     | file out (dithered image save location) |
 | --algorithm | algorithm to use                        |
-
-
-
-
