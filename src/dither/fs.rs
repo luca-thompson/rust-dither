@@ -9,7 +9,6 @@ pub fn fs_dither(image: &mut DynamicImage) {
     let (width, height) = image.dimensions();
 
     const BLACK: image::Rgba<u8> = image::Rgba([0, 0, 0, 255]);
-
     const WHITE: image::Rgba<u8> = image::Rgba([255, 255, 255, 255]);
 
     for x in 1..width - 1 {
