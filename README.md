@@ -8,11 +8,11 @@ Supports:
 - Bayer (2x, 4x)
 - Floyd Steinberg
 - HalfTone (in-progress)
+- Atkinson
 
 Algorithms to be added:
 - Bayer (8x) (along with an arg for the matrix size ?)
 - Void and Cluster
-- Atkinson
 
 ### Examples (bayer_4 & random)
 <img src="examples/bayer_4_example.jpg" alt="bayer_4_screenshot" width="350"/> <img src="examples/fs_example.jpg" alt="floyd_steinberg_screenshot" width="350"/>

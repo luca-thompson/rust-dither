@@ -4,6 +4,7 @@
 #[path = "dither/halftone.rs"] mod halftone;
 #[path = "dither/random.rs"] mod random;
 #[path = "dither/fs.rs"] mod fs;
+#[path = "dither/atkinson.rs"] mod atkinson;
 #[path = "grayscale.rs"] mod grayscale;
 
 use image::DynamicImage;
@@ -34,6 +35,9 @@ pub fn dispatch(image: &mut DynamicImage, algorithm: String){
         }
         "floyd_steinberg" => {
             fs::fs_dither(image);
+        }
+        "atkinson" => {
+            atkinson::atkinson_dither(image);
         }
         _ => {
             println!("Unrecognised algorithm: '{}'.", algorithm);
