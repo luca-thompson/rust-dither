@@ -2,7 +2,10 @@ use crate::pixel_buffer::PixelBuffer;
 
 pub fn bayer_dither(image: &mut PixelBuffer){
 
-    const BAYER_MATRIX_TWO: [[u8; 2]; 2] = [[0, 128], [192, 64]];
+    const BAYER_MATRIX_TWO: [[u8; 2]; 2] = [
+        [0, 128], 
+        [192, 64]
+    ];
 
     let (width, height) = image.get_dimensions();
 
