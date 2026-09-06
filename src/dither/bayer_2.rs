@@ -1,26 +1,18 @@
-#[path = "../grayscale.rs"] mod grayscale;
+use crate::pixel_buffer::PixelBuffer;
 
-use image::{DynamicImage, GenericImage, GenericImageView};
-
-pub fn bayer_dither(image: &mut DynamicImage){
+pub fn bayer_dither(image: &mut PixelBuffer){
 
     const BAYER_MATRIX_TWO: [[u8; 2]; 2] = [[0, 128], [192, 64]];
 
-    grayscale::grayscale(image);
-
-    let (width, height) = image.dimensions();
-
-    const BLACK: image::Rgba<u8> = image::Rgba([0, 0, 0, 255]);
-
-    const WHITE: image::Rgba<u8> = image::Rgba([255, 255, 255, 255]);
+    let (width, height) = image.get_dimensions();
 
     for x in 0..width{
         for y in 0..height{
-            if image.get_pixel(x, y)[0] < BAYER_MATRIX_TWO[x as usize % 2][y as usize % 2] {
-                image.put_pixel(x, y, BLACK);
+            if image.get_pixel(x, y) < BAYER_MATRIX_TWO[x as usize % 2][y as usize % 2] as f32 {
+                image.put_pixel(x, y, 0.0);
             }
             else{
-                image.put_pixel(x, y, WHITE);
+                image.put_pixel(x, y, 255.0);
             }
             
         }
