@@ -1,8 +1,6 @@
-#[path = "../grayscale.rs"] mod grayscale;
+use crate::pixel_buffer::PixelBuffer;
 
-use image::{DynamicImage, GenericImage, GenericImageView};
-
-pub fn halftone_dither(image: &mut DynamicImage){
+pub fn halftone_dither(image: &mut PixelBuffer){
 
     const HALFTONE_MATRIX: [[u8; 5]; 5] = [
         [215, 174, 92, 133, 225], 
@@ -12,23 +10,21 @@ pub fn halftone_dither(image: &mut DynamicImage){
         [246, 154, 113, 195, 236],
         ];
 
-    grayscale::grayscale(image);
+    let (width, height) = image.get_dimensions();
 
-    let (width, height) = image.dimensions();
+    const BLACK: f32 = 0.0;
 
-    const BLACK: image::Rgba<u8> = image::Rgba([0, 0, 0, 255]);
+    const WHITE: f32 = 255.0;
 
-    const WHITE: image::Rgba<u8> = image::Rgba([255, 255, 255, 255]);
-
-    let mut matrix_value: u8;
+    let mut matrix_value: f32;
 
     for x in 0..width{
         for y in 0..height{
 
-            matrix_value = HALFTONE_MATRIX[x as usize % 5][y as usize % 5];
+            matrix_value = HALFTONE_MATRIX[x as usize % 5][y as usize % 5] as f32;
 
-            if matrix_value == 0 {
-                if image.get_pixel(x, y)[0]  < 128 {
+            if matrix_value == 0.0 {
+                if image.get_pixel(x, y)  < 128.0 {
                     image.put_pixel(x, y, WHITE);
                 }
                 else{
@@ -37,11 +33,11 @@ pub fn halftone_dither(image: &mut DynamicImage){
 
                 continue;
             }
-            else if matrix_value == 255 {
+            else if matrix_value == 255.0 {
                 
             }
 
-            if image.get_pixel(x, y)[0] < matrix_value {
+            if image.get_pixel(x, y) < matrix_value {
                 image.put_pixel(x, y, BLACK);
             }
             else{

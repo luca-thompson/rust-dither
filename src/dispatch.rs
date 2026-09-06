@@ -5,40 +5,38 @@
 #[path = "dither/random.rs"] mod random;
 #[path = "dither/fs.rs"] mod fs;
 #[path = "dither/atkinson.rs"] mod atkinson;
-#[path = "grayscale.rs"] mod grayscale;
 
-mod image_buffer;
-use image_buffer::ImageBuffer;
+use crate::pixel_buffer::PixelBuffer;
 
 
-pub fn dispatch(img_buff: &mut ImageBuffer, algorithm: String){
+pub fn dispatch(pixel_buffer: &mut PixelBuffer, algorithm: String){
 
     let alg = algorithm.as_str();
 
     match alg {
         "grayscale" => {
-            grayscale::grayscale(img_buff);
+            println!("TODO: IMPLEMENT GRAYSCALE-ONLY")
         }
         "threshold" => {
-            threshold::threshold_dither(img_buff);
+            threshold::threshold_dither(pixel_buffer);
         }
         "bayer_2" => {
-            bayer_2::bayer_dither(img_buff);
+            bayer_2::bayer_dither(pixel_buffer);
         }
         "bayer_4" => {
-            bayer_4::bayer_dither(img_buff);
+            bayer_4::bayer_dither(pixel_buffer);
         }
         "halftone" => {
-            halftone::halftone_dither(img_buff);
+            halftone::halftone_dither(pixel_buffer);
         }
         "random" => {
-            random::random_dither(img_buff);
+            random::random_dither(pixel_buffer);
         }
         "floyd_steinberg" => {
-            fs::fs_dither(img_buff);
+            fs::fs_dither(pixel_buffer);
         }
         "atkinson" => {
-            atkinson::atkinson_dither(img_buff);
+            atkinson::atkinson_dither(pixel_buffer);
         }
         _ => {
             println!("Unrecognised algorithm: '{}'.", algorithm);

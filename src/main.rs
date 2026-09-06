@@ -15,26 +15,12 @@ struct Args {
 }
 
 #[path = "dispatch.rs"] mod dispatch;
-mod image_buffer;
-use image_buffer::ImageBuffer;
+mod pixel_buffer;
+use pixel_buffer::PixelBuffer;
 
 //image
-use image::{DynamicImage, GenericImageView, ImageReader,};
+use image::{ImageReader};
 
-
-
-
-pub fn to_image_buffer(img: &DynamicImage) -> ImageBuffer {
-    
-    let (width, height) = img.dimensions();
-    let pixels: Vec<f32> = img.to_luma8().into_raw().iter().map(|&p| p as f32).collect();
-    
-    ImageBuffer {
-        width: width,
-        height: height,
-        pixels,
-    }
-}
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
 
@@ -42,17 +28,17 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     println!("File in: '{}'.", args.f_in);
 
-    let mut img = ImageReader::open(args.f_in)?.decode()?;
-
-    let mut img_buff = to_image_buffer(&img);
+    let mut image = ImageReader::open(args.f_in)?.decode()?;
+    let mut pixel_buffer: PixelBuffer = PixelBuffer::to_pixel_buffer(&image);
 
     println!("Dithering using '{}' algorithm.", args.algorithm);
-    dispatch::dispatch(&mut img_buf, args.algorithm);
-
+    
+    dispatch::dispatch(&mut pixel_buffer, args.algorithm);
+    image = PixelBuffer::to_dynamic_image(pixel_buffer);
+    
     println!("Success! Saving as: '{}'.", args.f_out);
 
-    let _ = img.save(args.f_out);
-
+    image.save(args.f_out).unwrap();
 
     Ok(())
 }

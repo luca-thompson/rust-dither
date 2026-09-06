@@ -1,24 +1,17 @@
-#[path = "../grayscale.rs"]
-mod grayscale;
-
-use image::{DynamicImage, GenericImage, GenericImageView};
 use rand::RngExt;
 
-pub fn random_dither(image: &mut DynamicImage) {
-    grayscale::grayscale(image);
+use crate::pixel_buffer::PixelBuffer;
 
-    let (width, height) = image.dimensions();
+pub fn random_dither(image: &mut PixelBuffer){
 
-    const BLACK: image::Rgba<u8> = image::Rgba([0, 0, 0, 255]);
-
-    const WHITE: image::Rgba<u8> = image::Rgba([255, 255, 255, 255]);
+    let (width, height) = image.get_dimensions();
 
     for x in 0..width {
         for y in 0..height {
-            if image.get_pixel(x, y)[0] < rand::rng().random_range(0..255) {
-                image.put_pixel(x, y, BLACK);
+            if image.get_pixel(x, y) < rand::rng().random_range(0..255) as f32 {
+                image.put_pixel(x, y, 0.0);
             } else {
-                image.put_pixel(x, y, WHITE);
+                image.put_pixel(x, y, 255.0);
             }
         }
     }
