@@ -7,37 +7,38 @@
 #[path = "dither/atkinson.rs"] mod atkinson;
 #[path = "grayscale.rs"] mod grayscale;
 
-use image::DynamicImage;
+mod image_buffer;
+use image_buffer::ImageBuffer;
 
 
-pub fn dispatch(image: &mut DynamicImage, algorithm: String){
+pub fn dispatch(img_buff: &mut ImageBuffer, algorithm: String){
 
     let alg = algorithm.as_str();
 
     match alg {
         "grayscale" => {
-            grayscale::grayscale(image);
+            grayscale::grayscale(img_buff);
         }
         "threshold" => {
-            threshold::threshold_dither(image);
+            threshold::threshold_dither(img_buff);
         }
         "bayer_2" => {
-            bayer_2::bayer_dither(image);
+            bayer_2::bayer_dither(img_buff);
         }
         "bayer_4" => {
-            bayer_4::bayer_dither(image);
+            bayer_4::bayer_dither(img_buff);
         }
         "halftone" => {
-            halftone::halftone_dither(image);
+            halftone::halftone_dither(img_buff);
         }
         "random" => {
-            random::random_dither(image);
+            random::random_dither(img_buff);
         }
         "floyd_steinberg" => {
-            fs::fs_dither(image);
+            fs::fs_dither(img_buff);
         }
         "atkinson" => {
-            atkinson::atkinson_dither(image);
+            atkinson::atkinson_dither(img_buff);
         }
         _ => {
             println!("Unrecognised algorithm: '{}'.", algorithm);

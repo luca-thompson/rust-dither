@@ -1,12 +1,5 @@
-#[path = "dispatch.rs"] mod dispatch;
-
 //args
 use clap::{Parser};
-
-//image
-use image::{ImageReader};
-
-
 #[derive(Parser, Debug)]
 struct Args {
 
@@ -21,6 +14,28 @@ struct Args {
 
 }
 
+#[path = "dispatch.rs"] mod dispatch;
+mod image_buffer;
+use image_buffer::ImageBuffer;
+
+//image
+use image::{DynamicImage, GenericImageView, ImageReader,};
+
+
+
+
+pub fn to_image_buffer(img: &DynamicImage) -> ImageBuffer {
+    
+    let (width, height) = img.dimensions();
+    let pixels: Vec<f32> = img.to_luma8().into_raw().iter().map(|&p| p as f32).collect();
+    
+    ImageBuffer {
+        width: width,
+        height: height,
+        pixels,
+    }
+}
+
 fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     let args = Args::parse();
@@ -29,12 +44,15 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     let mut img = ImageReader::open(args.f_in)?.decode()?;
 
+    let mut img_buff = to_image_buffer(&img);
+
     println!("Dithering using '{}' algorithm.", args.algorithm);
-    dispatch::dispatch(&mut img, args.algorithm);
+    dispatch::dispatch(&mut img_buf, args.algorithm);
 
     println!("Success! Saving as: '{}'.", args.f_out);
 
     let _ = img.save(args.f_out);
+
 
     Ok(())
 }
