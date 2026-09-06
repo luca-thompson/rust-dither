@@ -14,7 +14,7 @@ Algorithms to be added:
 - Bayer (8x) (along with an arg for the matrix size ?)
 - Void and Cluster
 
-### Examples (bayer_4 & random)
+### Examples (bayer 4x & floyd steinberg)
 <img src="examples/bayer_4_example.jpg" alt="bayer_4_screenshot" width="350"/> <img src="examples/fs_example.jpg" alt="floyd_steinberg_screenshot" width="350"/>
 
 ### Installation
