@@ -7,7 +7,7 @@ use image::ImageReader;
 
 #[test]
 
-fn test_io() {
+fn file_io() {
     let test_image_vec: Vec<f32> = vec![0.0, 255.0, 255.0, 0.0];
     let test_pixel_buffer: PixelBuffer = PixelBuffer{width: 2, height: 2, pixels: test_image_vec};
 
