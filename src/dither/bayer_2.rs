@@ -11,8 +11,6 @@ pub fn bayer_dither(image: &mut PixelBuffer){
 
     for y in 0..height{
         for x in 0..width{
-            println!("pixel: {}", image.get_pixel(x, y));
-            println!("bayer_matrix value: {}", BAYER_MATRIX_TWO[y as usize % 2][x as usize % 2] as f32);
             if image.get_pixel(x, y) <= BAYER_MATRIX_TWO[y as usize % 2][x as usize % 2] as f32 {
                 image.put_pixel(x, y, 0.0);
             }
