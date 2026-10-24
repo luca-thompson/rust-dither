@@ -10,16 +10,15 @@ pub fn bayer_dither(image: &mut PixelBuffer){
     ];
 
     let (width, height) = image.get_dimensions();
-
-    for x in 0..width{
-        for y in 0..height{
-            if image.get_pixel(x, y) < BAYER_MATRIX_FOUR[x as usize % 4][y as usize % 4] as f32 {
+    
+    for y in 0..height{
+        for x in 0..width{
+            if image.get_pixel(x, y) <= BAYER_MATRIX_FOUR[y as usize % 4][x as usize % 4] as f32 {
                 image.put_pixel(x, y, 0.0);
             }
             else{
                 image.put_pixel(x, y, 255.0);
             }
-            
         }
     }
     
